@@ -58,15 +58,13 @@ In this first stage, you will explore the `diamonds` dataset and document your o
 
 ```{r q1-task}
 ## TASK: Plot `price` vs `carat` below
-ggplot(
-  data=diamonds
-) +
-  geom_point(
+diamonds %>%
+  ggplot(
     mapping = aes(
       x = carat,
       y = price
-    )
-  )
+    )) +
+  geom_point()
 ```
 
 **Observations**:
@@ -81,16 +79,14 @@ ggplot(
 
 ```{r q2-task}
 ## TASK: Plot `price`, `carat`, and `cut` below
-ggplot(
-  data=diamonds
-) +
-  geom_point(
+diamonds %>%
+  ggplot(
     mapping = aes(
       x = carat,
       y = price,
       colour = cut
-    )
-  )
+    )) +
+  geom_point()
 ```
 
 **Observations**:
@@ -101,6 +97,18 @@ ggplot(
 - Generally, the more expensive a diamond, the higher quality the cut, which is not always the case for diamonds of higher carat
 - Lower quality cuts tend to be less expensive
 - It is difficult to make clear distinctions because of all of the overlapping points
+
+```{r}
+# trying out feedback about implementing geom_smooth()
+diamonds %>%
+  ggplot(
+    mapping = aes(
+      x = carat,
+      y = price,
+      colour = cut
+    )) +
+  geom_smooth()
+```
 
 # Communication
 
