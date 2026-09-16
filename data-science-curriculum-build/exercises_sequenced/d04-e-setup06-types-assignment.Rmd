@@ -20,7 +20,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r library}
 library(tidyverse)
-
 ```
 
 ## Data Types
@@ -29,7 +28,7 @@ Any time we store data in a computer, we need to work with *types*. A type is a 
 
 ```{r}
 ## No need to edit; uncomment and run
-# "a" + 1
+"a" + 1
 ```
 
 However, we *can* "add" the letter "a" and the *string* "1":
@@ -49,7 +48,6 @@ TRUE == 1
 FALSE == 0
 ```
 
-
 - *Strings* can include just about any kind of character, so long as we enclose them with a pair of quotation marks "":
 
 ```{r}
@@ -61,7 +59,7 @@ nihongo
 
 One common issue is confusing a *string* with a *variable name*. This is further complicated by the fact that we can store strings *in* variables.
 
-### __q1__ Describe what is wrong with the code below.
+### **q1** Describe what is wrong with the code below.
 
 ```{r q1-task, eval=FALSE}
 ## TASK: Describe what went wrong here
@@ -74,7 +72,7 @@ airport == ATL
 
 **Observations**:
 
-- Write your explanation here
+- Airport == ATL isn't going to work because it is calling an object that does not exist and should instead be airport == "ATL" to test if its equal to that string or not.
 
 ## Casting
 
@@ -88,11 +86,11 @@ Sometimes our data will not be in the form we want; in this case we may need to 
 
 For example, sometimes our numerical data gets loaded as a string, in which case we'll need to cast it back to numbers.
 
-### __q2__ Cast the following vector `v_string` to integers.
+### **q2** Cast the following vector `v_string` to integers.
 
 ```{r q2-task}
 v_string <- c("00", "45", "90")
-v_integer <- NA_real_
+v_integer <- as.integer(v_string)
 ```
 
 Use the following test to check your work.
@@ -114,11 +112,13 @@ In addition to computer science data types, we will talk about variables in term
 
 - **Continuous variables** can have infinitely small differences between values, such as real numbers.
 - **Discrete variables** have a minimum difference between values, such as integers.
-- **Factors** (or **categoricals**) take only one of a fixed set of values. This could be a set of numbers {1, 2, 3}, or a set of categories {red, blue, green}. 
+- **Factors** (or **categoricals**) take only one of a fixed set of values. This could be a set of numbers {1, 2, 3}, or a set of categories {red, blue, green}.
   - The fixed set of values are sometimes called *factor levels*.
 
 <!-- include-exit-ticket -->
+
 # Exit Ticket
+
 <!-- -------------------------------------------------- -->
 
 Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup06-types-assignment.Rmd).

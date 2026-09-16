@@ -9,7 +9,7 @@ reading: 0
 
 # Setup: Function Basics
 
-*Purpose*: Functions are our primary tool in carying out data analysis with the `tidyverse`. It is unreasonable to expect yourself to memorize every function and all its details. To that end, we'll learn some basic _function literacy_ in R; how to inspect a function, look up its documentation, and find examples on a function's use.
+*Purpose*: Functions are our primary tool in carying out data analysis with the `tidyverse`. It is unreasonable to expect yourself to memorize every function and all its details. To that end, we'll learn some basic *function literacy* in R; how to inspect a function, look up its documentation, and find examples on a function's use.
 
 *Reading*: (None, this is the reading)
 
@@ -25,8 +25,7 @@ For instance, to get help on the `lm()` function, we could execute
 
 `> ?lm`
 
-*Note*: The `>` above is not part of the command; it automatically appears in our R console.
-*Hint*: In RStudio, we can press `CTRL + 2` to switch focus to the R console.
+*Note*: The `>` above is not part of the command; it automatically appears in our R console. *Hint*: In RStudio, we can press `CTRL + 2` to switch focus to the R console.
 
 Some functions are found in multiple packages; in this case, we need to click a link in the help panel. For instance, the following will open up a help panel with a few links:
 
@@ -36,12 +35,12 @@ Some functions are found in multiple packages; in this case, we need to click a 
 
 At this point, we should just pick a link, and go back if it's not relevant.
 
-### __q1__ Read the docs
+### **q1** Read the docs
 
 Get help on the built-in `rnorm` function.
 
 ```{r rnorm-help, eval=FALSE}
-## Your code here
+?rnorm
 ```
 
 ## (Not) Executing functions
@@ -55,12 +54,12 @@ rbind
 
 Calling the function this way shows its *source code*. This can sometimes be helpful for understanding, but isn't (usually) what we want out of our functions.
 
-### __q2__ Show source code
+### **q2** Show source code
 
 Show the source code for `lm`.
 
 ```{r rnorm-source}
-## Your code here
+lm
 ```
 
 ## Executing functions (for real)
@@ -70,6 +69,7 @@ To actually run a function, we need to call it with parentheses `()` and provide
 One simple---but important---function in R is the `c()` function: This takes multiple items and combines them into a vector.
 
 ```{r}
+# what is this little {r} guy doing up in here
 c(1, 2, 3)
 ```
 
@@ -88,7 +88,7 @@ seq(1, 10)
 *Aside*: If you're familiar with other programming languages (like Python), R might offend your aesthetic sensibilities. In R, we can *optionally* specify the argument name for positional arguments; for instance, the following allows works:
 
 ```{r}
-seq(from = 1, to = 10)
+seq(from = 1, to = 10) # what does this do why is it interesting idk anything
 ```
 
 Many functions have *optional arguments*: These functions have reasonable default values, which we can override to get different behavior. For instance, the `seq` function allows us to specify the "stride" of our sequence with a `by` argument:
@@ -101,41 +101,49 @@ The best way to figure out what arguments a function requires is to *read its do
 
 *Nerdy aside*: Computer scientists draw a distinction between "parameters" and "arguments"---there's a [Wikipedia article](https://en.wikipedia.org/wiki/Parameter_(computer_programming)) about this.
 
-### __q3__ Read the docs
+### **q3** Read the docs
 
 Using either the documentation or the source, determine the arguments for `rnorm`.
 
-
-### __q4__ Call the function
+### **q4** Call the function
 
 Using what you learned in q3, generate a random sample of size `n = 10` using `rnorm`.
 
 ```{r}
-## Write your code here
+rnorm(n = 10)
 ```
 
 ## Adapting examples
 
 Practically, one of the best ways to use a function is to find an *example* that's close to your intended use, and adapt that example. R documentation tends to be very good with many relevant examples. The examples are often at the *bottom* of the documentation, so sometimes it's best to just scroll to the bottom and check the examples.
 
-### __q5__ Adapt an example
+### **q5** Adapt an example
 
 Look up the documentation for the function `tribble`, and figure out how to create the following data.
 
-| u | w |
-|---|---|
-| 1 | 2 |
-| 3 | 4 |
+```{r}
+?tribble
+```
+
+| u   | w   |
+|-----|-----|
+| 1   | 2   |
+| 3   | 4   |
 
 *Hint*: Adapt an example!
 
 ```{r}
-## Write your code here
+tribble(
+  ~"u", ~"w",
+  1,   2,
+  3,   4,
+)
 ```
 
-
 <!-- include-exit-ticket -->
+
 # Exit Ticket
+
 <!-- -------------------------------------------------- -->
 
 Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup02-functions-assignment.Rmd).
