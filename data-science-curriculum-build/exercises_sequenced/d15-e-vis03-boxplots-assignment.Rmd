@@ -21,7 +21,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r library}
 library(tidyverse)
-
 ```
 
 ## Boxplots
@@ -51,7 +50,13 @@ mpg %>%
   geom_boxplot()
 ```
 
-**Observations** - Which class tends to be most "middle" for `displ` values? - Which plot is more effective for answering the previous question?
+**Observations** - Which class tends to be most "middle" for `displ` values?
+
+Minivans tend to be in the middle.
+
+\- Which plot is more effective for answering the previous question?
+
+The boxplots make it a lot more apparent. It is very difficult to tell anything with the density plot.
 
 ## Boxplot definition
 
@@ -97,6 +102,7 @@ Reorder `class` according to `hwy`. Pay attention to how this modifies the plot.
 ```{r q2-task}
 ## TASK: Edit this code to reorder `class` according to `hwy`
 mpg %>%
+  mutate(class = fct_reorder(class, hwy)) %>%
   ggplot(aes(x = class, y = hwy)) +
   geom_boxplot()
 ```
@@ -118,7 +124,25 @@ Use a `cut_*` verb (of your choice) to create a categorical variable out of `car
 ```{r q1-task}
 diamonds %>%
   ## TODO: Use mutate to add the column `carat_cut`
+  mutate(carat_cut = cut_number(carat, 10)) %>%
   ggplot(aes(x = carat_cut, y = price)) +
+  geom_boxplot()
+
+diamonds %>%
+  ## TODO: Use mutate to add the column `carat_cut`
+  mutate(carat_cut = cut_interval(carat, 50)) %>%
+  ggplot(aes(x = carat_cut, y = price)) +
+  geom_boxplot()
+
+diamonds %>%
+  ## TODO: Use mutate to add the column `carat_cut`
+  mutate(carat_cut = cut_width(carat, width = 0.4, boundary = 0)) %>%
+  ggplot(aes(x = carat_cut, y = price)) +
+  geom_boxplot()
+
+diamonds %>%
+  ## TODO: Use mutate to add the column `carat_cut`
+  ggplot(aes(x = carat, y = price)) +
   geom_boxplot()
 ```
 
@@ -144,7 +168,8 @@ The following plot has overlapping x-axis labels. Use a verb from the reading to
 ```{r q4-task}
 mpg %>%
   ggplot(aes(manufacturer, hwy)) +
-  geom_boxplot()
+  geom_boxplot() +
+  coord_flip()
 ```
 
 This is a simple---but important---trick to remember when visualizing data with many categories.
