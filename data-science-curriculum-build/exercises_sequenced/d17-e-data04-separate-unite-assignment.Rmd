@@ -68,34 +68,39 @@ tibble(digits = c(
 The `sep` argument is quite versatile. We can also use the special argument `sep = ""` to separate every letter in the string. Note that we'll get funny behavior if the strings are different lengths:
 
 ```{r}
-tibble(s = c(
-  "abc",
-  "def",
-  "yz"
-)) %>% 
-  separate(
-    col = s,
-    into = c("1", "2", "3"),
-    sep = ""
-  )
+unacceptance <-
+  tibble(s = c(
+    "abc",
+    "def",
+    "yz"
+  )) %>% 
+    separate(
+      col = s,
+      into = c("1", "2", "3"),
+      sep = ""
+    )
+unacceptance
 ```
 
 We can also specify `sep` as a string location. For instance, we could use this to "peel" off the leading characters of the strings:
 
 ```{r}
-tibble(s = c(
-  "a1",
-  "a5",
-  "b11",
-  "b23",
-  "c300"
-)) %>% 
-  separate(
-    s,
-    into = c("letter", "number"),
-    sep = 1
-  ) %>% 
-  mutate(number = as.integer(number))
+unacceptance2 <-
+  tibble(s = c(
+    "a1",
+    "a5",
+    "b11",
+    "b23",
+    "c300"
+  )) %>% 
+    separate(
+      s,
+      into = c("letter", "number"),
+      sep = 1
+    ) %>% 
+    mutate(number = as.integer(number))
+
+unacceptance2
 ```
 
 Note that `separte()` won't convert the strings for us! We'll need to `mutate()` if we've separated out numeric values.
@@ -121,9 +126,37 @@ tribble(
 ### **q1** Use a combination of `unite` and pivoting to turn `genes` into the same dataframe as `punnett`.
 
 ```{r q1-task}
+punnett <-
+  tribble(
+    ~parent1,   ~a,   ~A,
+    "a", "aa", "aA",
+    "A", "Aa", "AA"
+  )
+punnett
+
+genes <-
+  expand_grid(
+    parent1 = c("a", "A"),
+    parent2 = c("a", "A")
+  )
+genes
+
 df_q1 <-
   genes %>%
-## TODO: pivot and unite here!
+  # mutate(p1 = parent1) %>%
+  # relocate(p1, .before = parent1) %>%
+  unite(
+    col = "combined",
+    parent1, parent2,
+    sep = "",
+    remove = FALSE
+  ) %>%
+  pivot_wider(
+    names_from = parent2, # Cell entries to turn into new column names
+    values_from = combined, # Values to associate with the new column(s)
+    #values_drop_na = TRUE
+  )
+
 
 df_q1
 ```
@@ -163,7 +196,20 @@ This *slightly modified* version of the data no longer has a convenient separato
 ```{r q2-task}
 df_q2 <-
   alloys_mod %>%
-## TODO: pivot and separate here!
+  pivot_longer(
+    names_to = "temporary",
+    values_to = "values",
+    cols = c(-thick, -rep),
+  ) %>%
+  separate(
+    col = "temporary",
+    into = c("var", "angle"),
+    sep = -2
+  ) %>%
+  pivot_wider(
+    names_from = "var",
+    values_from = "values",
+  )
 
 df_q2
 ```
