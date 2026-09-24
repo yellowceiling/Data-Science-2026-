@@ -163,7 +163,6 @@ Note that the "amount of material" would vary with the thickness of a tested pla
 ```{r q4-vis}
 ## NOTE: No need to change; run this chunk
 df_stang_long %>%
-
   ggplot(aes(nu, E, color = as_factor(thick))) +
   geom_point(size = 3) +
   theme_minimal()
