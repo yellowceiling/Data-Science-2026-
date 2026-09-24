@@ -152,6 +152,12 @@ df_titanic %>% summarize(total = sum(n))
     British Board of Trade so it’s possible discrepancies within record
     keeping over the years have introduced conflicting accounts for how
     many people were aboard the ship.
+  - One potential cause for the discrepancy is differences in the way
+    records were analyzed. It is possible that over time, new records
+    could be found because there could be people missing potentially in
+    third class since it was mainly immigrants that might have had
+    differences in documentation than the others so they could have gone
+    uncounted for for a while despite being on the ship.
 
 ### **q3** Create a plot showing the count of persons who *did* survive, along with aesthetics for `Class` and `Sex`. Document your observations below.
 
@@ -159,30 +165,53 @@ df_titanic %>% summarize(total = sum(n))
 
 ``` r
 # summary(df_titanic)
-# df_titanic %>%
-#   select(n, everything())
+df_titanic %>%
+  select(n, everything())
+```
+
+    ## # A tibble: 32 × 5
+    ##        n Class Sex    Age   Survived
+    ##    <dbl> <chr> <chr>  <chr> <chr>   
+    ##  1     0 1st   Male   Child No      
+    ##  2     0 2nd   Male   Child No      
+    ##  3    35 3rd   Male   Child No      
+    ##  4     0 Crew  Male   Child No      
+    ##  5     0 1st   Female Child No      
+    ##  6     0 2nd   Female Child No      
+    ##  7    17 3rd   Female Child No      
+    ##  8     0 Crew  Female Child No      
+    ##  9   118 1st   Male   Adult No      
+    ## 10   154 2nd   Male   Adult No      
+    ## # ℹ 22 more rows
+
+``` r
 # test <- 
 #   df_titanic %>%
 #     filter(Survived == "Yes")
-# 
-# sex_vector = c(test %>% 
-#     filter(Sex == "Female") %>%
-#       select(n), 
-#     test %>% 
-#     filter(Sex == "Male") %>%
-#       select(n))
 
 ## TASK: Visualize counts against `Class` and `Sex`
-ggplot(
-  data=df_titanic %>%
-    filter(Survived == "Yes")
-) +
-  geom_bar(
+# ggplot(
+#   data=df_titanic %>%
+#     filter(Survived == "Yes")
+# ) +
+#   geom_col(
+#     mapping = aes(
+#       x = Sex, # Sex,
+#       fill = Class, # Class,
+#       # weight = n
+#     )
+#   )
+# 
+df_titanic %>%
+  filter(Survived == "Yes") %>%
+  ggplot(
     mapping = aes(
       x = Sex, # Sex,
+      y = n,
       fill = Class, # Class,
-      weight = n
-    )
+    )) +
+  geom_col(
+    position = "dodge"
   )
 ```
 
@@ -251,18 +280,45 @@ df_prop
 ### **q4** Replicate your visual from q3, but display `Prop` in place of `n`. Document your observations, and note any new/different observations you make in comparison with q3. Is there anything *fishy* in your plot?
 
 ``` r
-ggplot(
-  data=df_prop %>%
-    filter(Survived == "Yes")
-) +
-  geom_bar(
+# ggplot(
+#   data=df_prop %>%
+#     filter(Survived == "Yes")
+# ) +
+#   geom_bar(
+#     mapping = aes(
+#       x = Sex, # Sex,
+#       fill = Class, # Class,
+#       weight = Prop
+#     )
+#   )
+# 
+# df_prop %>%
+#   ggplot(
+#       filter(Survived == "Yes"),
+#       mapping = aes(
+#         x = Sex, # Sex,
+#         fill = Class, # Class,
+#         weight = Prop
+#       )
+# ) +
+#   geom_bar()
+
+df_prop %>%
+  filter(Survived == "Yes") %>%
+  ggplot(
     mapping = aes(
       x = Sex, # Sex,
+      y = Prop,
       fill = Class, # Class,
-      weight = Prop
     )
+  ) +
+  geom_col(
+    position = "dodge"
   )
 ```
+
+    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## (`geom_col()`).
 
 ![](c01-titanic-assignment_files/figure-gfm/q4-task-1.png)<!-- -->
 
@@ -273,15 +329,10 @@ ggplot(
   fewer survivors and the crew having the least survivors.
 - The male crew had the least survivors overall.
 - Is there anything *fishy* going on in your plot?
-  - In the code for calculating the proportions, we group the data by
-    Class, Sex, and Age, but then proceed to do nothing with Age besides
-    add it to the data, which causes a weird change to the proportions
-    that is not accounted for in the graph. The graph only plots Class
-    and Sex and nowhere does it mention Age despite it being factored
-    into the grouping.
-  - The count for male crew survivors is so much lower compared to the
-    raw counts because there are no children in the crew so no extra
-    individuals are being added to the proportion.
+  - I think it’s a bit odd that the male and female proportions for
+    survivors are the same. We know that more women survived and more
+    men died so why do the 1st and 2nd class women and men have the same
+    proportion?
 
 ### **q5** Create a plot showing the group-proportion of occupants who *did* survive, along with aesthetics for `Class`, `Sex`, *and* `Age`. Document your observations below.
 
@@ -289,19 +340,35 @@ ggplot(
 additional variables!
 
 ``` r
-ggplot(
-  data=df_prop %>%
-    filter(Survived == "Yes")
-) +
-  geom_bar(
+# ggplot(
+#   data=df_prop %>%
+#     filter(Survived == "Yes")
+# ) +
+#   geom_bar(
+#     mapping = aes(
+#       x = Sex, # Sex,
+#       fill = Class, # Class,
+#       weight = Prop
+#     )
+#   ) +
+#     facet_grid(rows = vars(Age))
+
+df_prop %>%
+  filter(Survived == "Yes") %>%
+  ggplot(
     mapping = aes(
       x = Sex, # Sex,
-      fill = Class, # Class,
-      weight = Prop
-    )
-  ) +
+      y = Prop,
+      fill = Class # Class,
+    )) + 
+    geom_col(
+      position = "dodge"
+    ) +
     facet_grid(rows = vars(Age))
 ```
+
+    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## (`geom_col()`).
 
 ![](c01-titanic-assignment_files/figure-gfm/q5-task-1.png)<!-- -->
 
@@ -323,15 +390,14 @@ ggplot(
   probably because there were fewer female crew members to begin with.
 - If you saw something *fishy* in q4 above, use your new plot to explain
   the fishy-ness.
-  - q4’s graph had strange counts due to Age being factored in but not
-    being graphed.
+  - q4’s graph had strange proportions due to Age being factored in but
+    not being graphed.
   - This new plot separates the survivors based on age which allows for
     a much clear visual and understanding about what the proportions
     actually mean.
   - The difference in female and male survivor proportions was not
     accurately being presented because the male children survivors were
-    being included so it skewed the proportions and made it seem like
-    the difference in male and female survivors was less than actuality.
+    being included so it skewed the proportions.
 
 # Notes
 
