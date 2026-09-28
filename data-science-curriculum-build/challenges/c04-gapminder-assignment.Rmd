@@ -174,6 +174,32 @@ gapminder %>%
 
 ```{r q4-task}
 ## TASK: Create a visual of gdpPercap vs continent
+gapminder %>%
+  # drop_na() %>%
+  #filter(year == max(year)) %>%
+  filter(year == min(year) | year == max(year)) %>%
+  # filter(!(year_max == FALSE & year_min == FALSE)) %>%
+  # droplevels() %>%
+  ggplot(
+    aes(
+      x = continent, 
+      y = gdpPercap)) +
+  geom_boxplot() +
+  geom_point(
+    data = . %>% filter(country %in% c("United States", "Kuwait", "Canada")),
+    mapping = aes(color = country),
+    size = 2
+  ) +
+  # facet_wrap(
+  #   facets = vars(year == max(year), year == min(year))) +
+  #   ~ year == year_max) +
+  # facet_grid(
+  #   rows = vars(year == max(year)), 
+  #   cols = vars(year == min(year))
+  # ) +
+  facet_wrap(~ year) +
+  scale_y_log10()
+
 ```
 
 **Observations**:
@@ -189,19 +215,83 @@ Now it's your turn! We just went through guided EDA considering the GDP per capi
 ### **q5** Create *at least* three new figures below. With each figure, try to pose new questions about the data.
 
 ```{r q5-task1}
-## TASK: Your first graph
+gapminder %>%
+  filter(year == year_min) %>%
+  ggplot(
+    aes(
+      x = continent,
+      y = lifeExp
+    )
+  ) + 
+  geom_boxplot() +
+  scale_y_log10() +
+  stat_summary(fun = median,
+             geom = "line",
+             size = 1,
+             aes(group = 1),
+             col = "red")
+# emilys idea about before and after vietnam war
+
+gapminder
 ```
 
 - (Your notes and observations here)
 
 ```{r q5-task2}
 ## TASK: Your second graph
+gapminder %>%
+  filter(year == year_max) %>%
+  ggplot(
+    aes(
+      x = continent,
+      y = lifeExp
+    )
+  ) + 
+  geom_boxplot() +
+  scale_y_log10() + 
+  # geom_smooth(method = "lm", color="blue")
+  stat_summary(fun = median,
+               geom = "line",
+               size = 1,
+               aes(group = 1),
+               col = "blue")
 ```
 
 - (Your notes and observations here)
 
 ```{r q5-task3}
 ## TASK: Your third graph
+gapminder %>%
+  filter(year == year_min) %>%
+  ggplot(
+    aes(
+      x = continent,
+      y = pop,
+    )
+  ) + 
+  geom_boxplot(
+    aes(
+    )
+  ) +
+  scale_y_log10()
+
+gapminder %>%
+  filter(year == year_max) %>%
+  ggplot(
+    aes(
+      x = continent,
+      y = pop,
+    )
+  ) + 
+  geom_boxplot(
+  ) +
+  scale_y_log10() 
+
+gapminder %>%
+  group_by(year, continent) %>%
+  summarize(pop = sum(pop)) %>%
+  ggplot(aes(year, pop, fill = continent)) +
+  geom_area()
 ```
 
 - (Your notes and observations here)
