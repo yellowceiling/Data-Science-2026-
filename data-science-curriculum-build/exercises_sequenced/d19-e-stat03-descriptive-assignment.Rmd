@@ -92,9 +92,66 @@ flights %>%
   summarize(dep_delay = mean(dep_delay, na.rm = TRUE))
 ```
 
+```{r}
+# {r, fig.width=4, fig.height=4} 
+#zdrs ggplot time
+set.seed(201) #fiddle with seed until u like the overlapping
+mpg %>%
+  # head()
+  ggplot(aes(manufacturer, hwy)) +
+  #geom_point()
+  geom_jitter(
+    height = 0, #0 because we are analyzing the hwy, don't want to change that data
+    width = 0.2,
+    pch = 21, #different kinds of shapes, allows for both fill and color
+    size = 2,
+    color = "black", fill = "white"
+    #set a seed to control rng, picking the same random numbers
+    
+  )
+
+mpg %>%
+  ggplot(aes(manufacturer, hwy)) +
+  geom_violin() +
+  ggforce::geom_sina()
+  
+#raw numbers, feeding into heuristic, creates more outliers
+#log scale puts data through heuristic first ??
+#variation over orders of magnitude
+#library(patchwork)
+#p1 <- ggplot, p2 <- ggplot
+#p1 + p2
+
+library(patchwork)
+p1 <-
+  mpg %>%
+  ggplot(aes(manufacturer, hwy)) +
+  geom_violin() +
+  ggforce::geom_sina() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+
+p2 <-
+  mpg %>%
+  # head()
+  ggplot(aes(manufacturer, hwy)) +
+  #geom_point()
+  geom_jitter(
+    height = 0, #0 because we are analyzing the hwy, don't want to change that data
+    width = 0.2,
+    pch = 21, #different kinds of shapes, allows for both fill and color
+    size = 2,
+    color = "black", fill = "white") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+
+p1 + p2
+```
+
+Issues: points overlapping on one another –\> jitter, categories smear together –\>
+
 **Observations**:
 
 - What is the mean departure delay time, among available values?
+  - 12.63907
 
 ## Central Tendency
 
@@ -263,7 +320,8 @@ set.seed(101)
 v_test_iqr <- rnorm(n = 10)
 
 ## TASK: Compute the interquartile range
-test_iqr <- NA_real_
+test_iqr <- 
+  quantile(v_test_iqr, probs = 0.75) - quantile(v_test_iqr, probs = 0.25)
 ```
 
 Use the following test to check your answer.
@@ -306,13 +364,33 @@ tibble(
 
 ```{r q4-task}
 ## TODO: Use code from q2 to compute the sd and IQR, rank as before
+flights %>%
+  group_by(carrier) %>%
+  summarize(
+    sd = sd(dep_delay, na.rm = TRUE),
+    iqr_d = IQR(dep_delay, na.rm = TRUE)
+  ) %>%
+  arrange(desc(sd)) %>%
+  head(5)
+
+flights %>%
+  group_by(carrier) %>%
+  summarize(
+    sd = sd(dep_delay, na.rm = TRUE),
+    iqr_d = IQR(dep_delay, na.rm = TRUE)
+  ) %>%
+  arrange(desc(iqr_d)) %>%
+  head(5)
 ```
 
 **Observations**:
 
 - Which carriers are at the top of both `sd` and `IQR` departure delay?
+  - EV, FL, YV, F9
 - Which carriers differ in the two lists?
+  - 9E, HA
 - Which carrier has the biggest difference between its `sd` and `IQR`? What might this mean?
+  - HA, it has a lot more outliers than the other carriers.
 
 ## Dependence
 
@@ -359,7 +437,7 @@ In the case of a *perfect linear relationships* the Pearson correlation takes th
 ### **q5** Compute the Pearson correlation between `x, y` below. Play with the `slope` and observe the change in the correlation.
 
 ```{r ex-cor-line}
-slope <- 0.5 # Play with this value; observe the correlation
+slope <- -1 # Play with this value; observe the correlation
 df_line <-
   tibble(x = seq(-1, +1, length.out = 50)) %>%
   mutate(y = slope * x)
@@ -376,7 +454,9 @@ df_line %>%
 **Observations**:
 
 - For what values of `slope` is the correlation positive?
+  - Slope \> 0
 - For what values of `slope` is the correlation negative?
+  - Slope \< 0
 
 Note that this means *correlation is a measure of dependence*; it is **not** a measure of slope! It is better thought of as how *strong* the relationship between two variables is. A closer-to-zero correlation indicates a noisy relationship between variables, while a closer-to-one (in absolute value) indicates a more perfect, predictable relationship between the variables. For instance, the following code simulates data with different correlations, and facets the data based on the underlying correlation.
 
@@ -444,12 +524,26 @@ df_quad <-
 df_quad %>%
   ggplot(aes(x, y)) +
   geom_point()
+
+df_quad %>%
+  summarize(rho = cor(x, y))
 ```
 
 **Observations**:
 
 - What do you predict the correlations to be?
+
+  - 0
+
 - What are the actual correlations?
+
+  +---------------+---+---+---+---+
+  | rho           |   |   |   |   |
+  |               |   |   |   |   |
+  | \<dbl\>       |   |   |   |   |
+  +==============:+===+===+===+===+
+  | -2.018674e-16 |   |   |   |   |
+  +---------------+---+---+---+---+
 
 One last point about correlation: The mean is to Pearson correlation as the median is to Spearman correlation. The median and Spearman's rho are robust to outliers.
 

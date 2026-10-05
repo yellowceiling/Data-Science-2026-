@@ -9,8 +9,7 @@ reading: 0
 
 *Purpose*: Often our data are scattered across multiple sets. In this case, we need to be able to *join* data.
 
-*Reading*: (None, this is the reading)
-*Topics*: Welcome, mutating joins, filtering joins, Binds and set operations
+*Reading*: (None, this is the reading) *Topics*: Welcome, mutating joins, filtering joins, Binds and set operations
 
 ```{r setup, include=FALSE}
 # knitr options
@@ -31,7 +30,7 @@ Frequently, the data we need for an analysis is scattered across multiple datase
 
 ### Dangers of Binding!
 
-As noted above, binding is a "dumb" way to combine data. 
+As noted above, binding is a "dumb" way to combine data.
 
 Let's look at an example using `bind_columns`. This will take two datasets and "glue" them together in whatever order the happened to be arranged in.
 
@@ -58,13 +57,13 @@ beatles2 <-
 bind_cols(beatles1, beatles2)
 ```
 
-### __q1__ Diagnose an issue
+### **q1** Diagnose an issue
 
 Describe what is wrong with the result of `bind_cols` above and how it happened.
 
 *Hint*: John Lennon played guitar in The Beatles. John McCartney is not a real person... (as far as I know).
 
-- Write your answer here
+- The issue is that the two data sets do not have the information in the same order. They both put the different members in a different orientation which means that when the two data sets got bound together, it resulted in issues because we combined datasets that do not align perfectly. The names and instruments are mismatched of it.
 
 ## Joining data
 
@@ -107,15 +106,26 @@ beatles3 <-
   )
 ```
 
-### __q2__ Use the following `beatles3` to *correctly* join `beatles1`
+### **q2** Use the following `beatles3` to *correctly* join `beatles1`
 
 *Hint*: You will need to use two join functions to complete this task.
 
 ```{r q2-task}
 df_q2 <-
+  beatles1 %>%
+  left_join(
+    beatles3,
+    by = "name"
+  ) %>%
+  right_join(
+    beatles2,
+    by = "surname"
+  )
 ## TODO: Join beatles1 and beatles2 using beatles3 to match rows
 
 df_q2
+#facet wrap all u need to give it is column name to wrap on
+#turn streptomycin into a value in a cell and not a column name
 ```
 
 Use the following test to check your work:
@@ -188,10 +198,16 @@ flights %>%
     #       name in `flights`   name in `airports`
     by = c( "origin"          = "faa"              )
   )
+
+flights %>% 
+  select(flight, origin) 
+airports %>% select(faa, name)
+
+flights %>%
+  head(5)
 ```
 
-
-### __q3__ Add the airport name
+### **q3** Add the airport name
 
 Complete the code below by using an appropriate join to add the airport name to the `flights` dataset.
 
@@ -200,13 +216,14 @@ Complete the code below by using an appropriate join to add the airport name to 
 ```{r q3-task}
 ## TASK: Add the airport name for the `dest` using a join
 flights %>% 
-  left_join(
+  inner_join(
     airports %>% select(faa, name),
     ## TODO: Select the correct join keys
+    by = c("dest" = "faa") # why does inner join work here
   ) %>% 
   select(flight, dest, name, everything())
+#scale_y_free
 ```
-
 
 ### Filtering joins
 
@@ -217,7 +234,7 @@ Unlike a mutating join, a *filtering join* only filters rows---it doesn't modify
 
 Filtering joins are an elegant way to produce complicated filters. They are especially helpful because you can first inspect what *criteria* you'll filter on, then perform the filter. We'll use the tidyr tool `expand_grid` to make such a criteria dataframe, then apply it to filter the `flights` data.
 
-### __q4__ Create a "grid" of values
+### **q4** Create a "grid" of values
 
 Use `expand_grid` to create a `criteria` dataframe with the `month` equal to `8, 9` and the airport identifiers in `dest` for the San Francisco, San Jose, and Oakland airports. We'll use this in q4 for a filter join.
 
@@ -228,6 +245,10 @@ Use `expand_grid` to create a `criteria` dataframe with the `month` equal to `8,
 ```{r q4-task}
 criteria <-
 ## TODO: Use expand_grid to create a criteria dataframe
+  expand_grid(
+    month = c(8, 9),
+    dest = c("SJC", "SFO", "OAK")
+  )
 
 criteria
 ```
@@ -262,7 +283,7 @@ assertthat::assert_that(
 print("Well done!")
 ```
 
-### __q5__ Filter with your `criteria`
+### **q5** Filter with your `criteria`
 
 Use the `criteria` dataframe you produced above to filter `flights` on `dest` and `month`.
 
@@ -272,6 +293,10 @@ Use the `criteria` dataframe you produced above to filter `flights` on `dest` an
 df_q5 <-
   flights %>%
 ## TODO: Use expand_grid to create a criteria dataframe
+  semi_join(
+    criteria,
+    by = c("dest", "month")
+  )
 
 df_q5
 ```
@@ -295,7 +320,9 @@ print("Nice!")
 ```
 
 <!-- include-exit-ticket -->
+
 # Exit Ticket
+
 <!-- -------------------------------------------------- -->
 
 Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data05-join-assignment.Rmd).
