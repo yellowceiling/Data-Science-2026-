@@ -26,7 +26,7 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 <!-- ------------------------- -->
 
 | Category | Needs Improvement | Satisfactory |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | Effort | Some task **q**'s left unattempted | All task **q**'s attempted |
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
@@ -116,12 +116,12 @@ print("Very good!")
 
 ```{r q2-task}
 ##
-df_stang_long
-# df_stang_long %>%
-#   glimpse()
 
-# df_stang_long %>%
-#   mean(average = mean(E, na.rm = T))
+df_stang_long %>%
+  distinct(alloy)
+
+df_stang_long %>%
+  distinct(thick)
 ```
 
 **Observations**:
@@ -129,11 +129,11 @@ df_stang_long
 - Is there "one true value" for the material properties of Aluminum?
   - No. Different alloys have different compositions which means they each have their own properties with things like temperature, elasticity, ductility, etc. Even within one type of alloy, there is variation present which also means there is no one true value for a specific alloy either.
 - How many aluminum alloys are in this dataset? How do you know?
-  - There is only one alloy in the dataset. Looking at the alloy column, the only one listed is the 24ST alloy.
+  - There is only one alloy in the dataset at you can see with distinct(alloy). Looking at the alloy column, the only one listed is the 24ST alloy.
 - What angles were tested?
   - 0 degrees, 45 degrees, 90 degrees.
 - What thicknesses were tested?
-  - 0.022, 0.032, 0.064, and 0.081
+  - 0.022, 0.032, 0.064, and 0.081 as shown in by distinct(thick)
 - How does nu compare with changes in elasticity?
 
 ## Visualize
@@ -173,7 +173,7 @@ df_stang_long %>%
 - Does this graph support or contradict the claim above?
   - This graph contradicts that elasticity is intensive because changes in values of thickness do tend to change the amount of elasticity.
 - Is this evidence *conclusive* one way or another?
-  - No.
+  - No. Each of the different thicknesses are kind of grouped together in different areas. This implies that changes in elasticity changes with the thickness but it is not conclusive because for example the 0.022 data is very spread out and does not make a good argument for such a relationship due to the data point with a nu of 0.310 while the rest of the points are also spread out on the opposite side of the graph it makes it hard to say that the thickness actually had an impact on the elasticity.
 
 # References
 

@@ -227,31 +227,28 @@ print("Very good!")
 
 ``` r
 ##
-df_stang_long
+
+df_stang_long %>%
+  distinct(alloy)
 ```
 
-    ## # A tibble: 26 × 5
-    ##    thick alloy   angle     E    nu
-    ##    <dbl> <chr>   <int> <dbl> <dbl>
-    ##  1 0.022 al_24st     0 10600 0.321
-    ##  2 0.022 al_24st    45 10700 0.329
-    ##  3 0.022 al_24st    90 10500 0.31 
-    ##  4 0.022 al_24st     0 10600 0.323
-    ##  5 0.022 al_24st    45 10500 0.331
-    ##  6 0.022 al_24st    90 10700 0.323
-    ##  7 0.032 al_24st     0 10400 0.329
-    ##  8 0.032 al_24st    45 10400 0.318
-    ##  9 0.032 al_24st    90 10300 0.322
-    ## 10 0.032 al_24st     0 10300 0.319
-    ## # ℹ 16 more rows
+    ## # A tibble: 1 × 1
+    ##   alloy  
+    ##   <chr>  
+    ## 1 al_24st
 
 ``` r
-# df_stang_long %>%
-#   glimpse()
-
-# df_stang_long %>%
-#   mean(average = mean(E, na.rm = T))
+df_stang_long %>%
+  distinct(thick)
 ```
+
+    ## # A tibble: 4 × 1
+    ##   thick
+    ##   <dbl>
+    ## 1 0.022
+    ## 2 0.032
+    ## 3 0.064
+    ## 4 0.081
 
 **Observations**:
 
@@ -262,12 +259,13 @@ df_stang_long
     variation present which also means there is no one true value for a
     specific alloy either.
 - How many aluminum alloys are in this dataset? How do you know?
-  - There is only one alloy in the dataset. Looking at the alloy column,
-    the only one listed is the 24ST alloy.
+  - There is only one alloy in the dataset at you can see with
+    distinct(alloy). Looking at the alloy column, the only one listed is
+    the 24ST alloy.
 - What angles were tested?
   - 0 degrees, 45 degrees, 90 degrees.
 - What thicknesses were tested?
-  - 0.022, 0.032, 0.064, and 0.081
+  - 0.022, 0.032, 0.064, and 0.081 as shown in by distinct(thick)
 - How does nu compare with changes in elasticity?
 
 ## Visualize
@@ -325,7 +323,14 @@ df_stang_long %>%
   - This graph contradicts that elasticity is intensive because changes
     in values of thickness do tend to change the amount of elasticity.
 - Is this evidence *conclusive* one way or another?
-  - No.
+  - No. Each of the different thicknesses are kind of grouped together
+    in different areas. This implies that changes in elasticity changes
+    with the thickness but it is not conclusive because for example the
+    0.022 data is very spread out and does not make a good argument for
+    such a relationship due to the data point with a nu of 0.310 while
+    the rest of the points are also spread out on the opposite side of
+    the graph it makes it hard to say that the thickness actually had an
+    impact on the elasticity.
 
 # References
 
