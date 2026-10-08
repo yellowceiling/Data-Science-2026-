@@ -122,6 +122,18 @@ df_michelson %>% glimpse()
     ## $ Temp         <dbl> 76, 72, 72, 72, 72, 72, 83, 83, 83, 83, 83, 90, 90, 71, 7…
     ## $ Velocity     <dbl> 299850, 299740, 299900, 300070, 299930, 299850, 299950, 2…
 
+``` r
+df_michelson %>% summary()
+```
+
+    ##       Date                     Distinctness      Temp          Velocity     
+    ##  Min.   :1879-06-05 00:00:00   1:15         Min.   :58.00   Min.   :299620  
+    ##  1st Qu.:1879-06-13 00:00:00   2:39         1st Qu.:72.00   1st Qu.:299808  
+    ##  Median :1879-06-19 00:00:00   3:46         Median :77.00   Median :299850  
+    ##  Mean   :1879-06-18 20:38:24                Mean   :76.39   Mean   :299852  
+    ##  3rd Qu.:1879-06-23 06:00:00                3rd Qu.:83.25   3rd Qu.:299893  
+    ##  Max.   :1879-07-02 00:00:00                Max.   :90.00   Max.   :300070
+
 *Data dictionary*:
 
 - `Date`: Date of measurement
@@ -140,13 +152,13 @@ df_michelson %>% glimpse()
 
 ``` r
 ## TODO: Compute summaries
-df_q1 <- 
+df_q1 <-
   df_michelson %>%
   group_by(Distinctness) %>%
-    summarize(
-      n = n(),
-      MeanVelocity = mean(Velocity)
-    )
+  summarize(
+    n = n(),
+    MeanVelocity = mean(Velocity)
+  )
 df_q1 %>%
   arrange(desc(Distinctness)) %>%
   knitr::kable()
@@ -161,8 +173,7 @@ df_q1 %>%
 **Observations**: - Write your observations here!
 
 \- My table has values to decimal points whereas Michelson’s data is
-rounded down for the first column and rounded up for the second two
-columns.
+rounded to the 10s place in all of the columns.
 
 \- Why might your table differ from Michelson’s?
 
@@ -339,12 +350,13 @@ places between the two graphs.
 
 Differences - In the beginning of the real data, there is a lot more
 fluctuation that narrows as time goes on, whereas in the simulated data,
-it starts off more narrow and becomes less accurate as time goes on
+it starts off more narrow and becomes more variable as time goes on
 which is interesting. The simulated data also does not have any points
-on the best fine line go below the uncertainty whereas the real data has
+on the trend line go below the uncertainty whereas the real data has
 multiple peaks that go below the line, especially the one around June
-12-13. The simulated data ends slightly above the actual velocity value,
-whereas the real data ends right on that value.
+12-13. The simulated data ends above the actual velocity value and the
+real data also ends up higher than the actual velocity value but less
+than the simulated data.
 
 ### **q5** You have access to a few other variables. Construct a **at least three** visualizations of `VelocityVacuum` against these other factors. Are there other patterns in the data that might help explain the difference between Michelson’s estimate and `LIGHTSPEED_VACUUM`?
 
@@ -369,8 +381,8 @@ df_q2 %>%
 
 ``` r
 df_q2 %>%
-  ggplot(aes(Velocity, VelocityVacuum)) +
-  geom_point()
+  ggplot(aes(Temp, VelocityVacuum)) +
+  geom_col()
 ```
 
 ![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
@@ -386,12 +398,18 @@ df_q2 %>%
 - 2nd graph: There is a general trend that as temperature increases, the
   measurement increases. It is not a great fit and there are a wide
   range of values at around 72 degrees.
-- 3rd graph: There is a direct relationship between velocity and
-  velocity in the vacuum where as one increases, the other increases as
-  well. This makes sense because this graph is comparing two very
-  similar quantities.
+- 3rd graph: This shows the similar trend that as temeprature increases,
+  measurement increases, but it made it more clear to me where the
+  majority of the values were measured. The majority of values were in
+  the 70s-80s range and there is quite a lot of variability within that
+  range which is interesting. Another observation is that the tallest
+  column is at 79 degrees yet in the 2nd graph, the highest value was at
+  72 degrees.
 - The 2nd and 3rd graphs are not saying much because they’re both
   basically just saying that the two values are positively related.
+- I don’t think there is a clear pattern that might explain the
+  difference between the estimate and the actual lightspeed value in the
+  data alone without doing extra experiments or research.
 
 ## Bibliography
 
