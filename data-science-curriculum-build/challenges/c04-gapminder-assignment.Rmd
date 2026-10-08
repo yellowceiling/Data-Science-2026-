@@ -149,12 +149,28 @@ gapminder %>%
   filter(year == year_min) %>%
   filter(continent == "Americas") %>%
   arrange(desc(gdpPercap))
+
+gapminder %>%
+  filter(year == year_min) %>%
+  filter(continent == "Africa") %>%
+  arrange(desc(gdpPercap))
+
+gapminder %>%
+  filter(year == year_min) %>%
+  filter(continent == "Europe") %>%
+  arrange(desc(gdpPercap))
+
+gapminder %>%
+  filter(year == year_min) %>%
+  filter(continent == "Oceania") %>%
+  arrange(desc(gdpPercap))
 ```
 
 **Observations**:
 
 - Identify the outlier countries from q2
   - Kuwait, United States, Canada
+  - Looking at the other continents, the other highest gdp's are not as intense outliers as those three because the difference between Venezuela and Canada is 3,678 and the difference between Kuwait and Bahrain is 98,515. In the other three continents the differences between the highest 2 values and third highest are much smaller like 432 in Africa, 116 in Europe, and 517 in Oceania.
 
 *Hint*: For the next task, it's helpful to know a ggplot trick we'll learn in an upcoming exercise: You can use the `data` argument inside any `geom_*` to modify the data that will be plotted *by that geom only*. For instance, you can use this trick to filter a set of points to label:
 
@@ -242,6 +258,7 @@ gapminder %>%
 ```
 
 - There is a lot of zig-zagging between the medians of the continents that shows the amount of disparity in the medians.
+- Question: why is Oceania's life expectancy so much higher than everywhere else?
 
 ```{r q5-task2}
 ## TASK: Your second graph
@@ -265,13 +282,14 @@ gapminder %>%
 
 - There is less zig-zagging between the continents which shows that over time life expectancy for the Americas, Asia, Europe, and Oceania became very similar.
 - Africa's life expectancy increased but there was still a large disparity between it and all of the other continents.
+- Question: why is Africa's life expectancy so much lower than the other four continents?
 
 ```{r q5-task3}
 gapminder %>%
   group_by(year, continent) %>%
   summarize(pop = sum(pop)) %>%
-  ggplot(aes(year, pop, fill = continent)) +
-  geom_area()
+  ggplot(aes(year, pop, color = continent)) +
+  geom_line()
 ```
 
 - Asia has consistently had the biggest population.
@@ -279,6 +297,8 @@ gapminder %>%
 - Europe's population has been slowly increasing over the span of this data set.
 
 - Oceania went from an inconceivable speck to a slightly observable lines which shows the drastic difference in population size. I googled it and today Oceania has a population size of around 46 million according to Wikipedia so it is super small compared to every other continent.
+
+- Question: Why is Oceania's population barely changing at all?
 
 ```{r}
 gapminder %>%
@@ -294,6 +314,7 @@ gapminder %>%
 This is a graph of the ratio of the highest/lowest gdp of all the countries over the years.
 
 - There is a large spike in 1972 after a decline and then a sharp fall off afterward.
+- Question: what caused the large spike in 1972?
 
 ```{r}
 gapminder %>%
@@ -326,6 +347,8 @@ This is a graph showing the ratio of the highest/lowest life expectancy of all t
 - There is a huge spike in 1992 which means that there was a huge disparity in ratio.
 
 - This is a smaller but still noticeable spike in 1977 which means there was a large disparity in ratio again.
+
+- Question: what are the two large spikes in 1977 and 1992?
 
 ```{r}
 gapminder %>%

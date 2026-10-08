@@ -297,10 +297,73 @@ gapminder %>%
     ## 10 Mexico        Americas   1952    50.8  30144317     3478.
     ## # ℹ 15 more rows
 
+``` r
+gapminder %>%
+  filter(year == year_min) %>%
+  filter(continent == "Africa") %>%
+  arrange(desc(gdpPercap))
+```
+
+    ## # A tibble: 52 × 6
+    ##    country      continent  year lifeExp      pop gdpPercap
+    ##    <fct>        <fct>     <int>   <dbl>    <int>     <dbl>
+    ##  1 South Africa Africa     1952    45.0 14264935     4725.
+    ##  2 Gabon        Africa     1952    37.0   420702     4293.
+    ##  3 Angola       Africa     1952    30.0  4232095     3521.
+    ##  4 Reunion      Africa     1952    52.7   257700     2719.
+    ##  5 Djibouti     Africa     1952    34.8    63149     2670.
+    ##  6 Algeria      Africa     1952    43.1  9279525     2449.
+    ##  7 Namibia      Africa     1952    41.7   485831     2424.
+    ##  8 Libya        Africa     1952    42.7  1019729     2388.
+    ##  9 Congo, Rep.  Africa     1952    42.1   854885     2126.
+    ## 10 Mauritius    Africa     1952    51.0   516556     1968.
+    ## # ℹ 42 more rows
+
+``` r
+gapminder %>%
+  filter(year == year_min) %>%
+  filter(continent == "Europe") %>%
+  arrange(desc(gdpPercap))
+```
+
+    ## # A tibble: 30 × 6
+    ##    country        continent  year lifeExp      pop gdpPercap
+    ##    <fct>          <fct>     <int>   <dbl>    <int>     <dbl>
+    ##  1 Switzerland    Europe     1952    69.6  4815000    14734.
+    ##  2 Norway         Europe     1952    72.7  3327728    10095.
+    ##  3 United Kingdom Europe     1952    69.2 50430000     9980.
+    ##  4 Denmark        Europe     1952    70.8  4334000     9692.
+    ##  5 Netherlands    Europe     1952    72.1 10381988     8942.
+    ##  6 Sweden         Europe     1952    71.9  7124673     8528.
+    ##  7 Belgium        Europe     1952    68    8730405     8343.
+    ##  8 Iceland        Europe     1952    72.5   147962     7268.
+    ##  9 Germany        Europe     1952    67.5 69145952     7144.
+    ## 10 France         Europe     1952    67.4 42459667     7030.
+    ## # ℹ 20 more rows
+
+``` r
+gapminder %>%
+  filter(year == year_min) %>%
+  filter(continent == "Oceania") %>%
+  arrange(desc(gdpPercap))
+```
+
+    ## # A tibble: 2 × 6
+    ##   country     continent  year lifeExp     pop gdpPercap
+    ##   <fct>       <fct>     <int>   <dbl>   <int>     <dbl>
+    ## 1 New Zealand Oceania    1952    69.4 1994794    10557.
+    ## 2 Australia   Oceania    1952    69.1 8691212    10040.
+
 **Observations**:
 
 - Identify the outlier countries from q2
   - Kuwait, United States, Canada
+  - Looking at the other continents, the other highest gdp’s are not as
+    intense outliers as those three because the difference between
+    Venezuela and Canada is 3,678 and the difference between Kuwait and
+    Bahrain is 98,515. In the other three continents the differences
+    between the highest 2 values and third highest are much smaller like
+    432 in Africa, 116 in Europe, and 517 in Oceania.
 
 *Hint*: For the next task, it’s helpful to know a ggplot trick we’ll
 learn in an upcoming exercise: You can use the `data` argument inside
@@ -416,6 +479,8 @@ gapminder %>%
 
 - There is a lot of zig-zagging between the medians of the continents
   that shows the amount of disparity in the medians.
+- Question: why is Oceania’s life expectancy so much higher than
+  everywhere else?
 
 ``` r
 ## TASK: Your second graph
@@ -444,13 +509,15 @@ gapminder %>%
   became very similar.
 - Africa’s life expectancy increased but there was still a large
   disparity between it and all of the other continents.
+- Question: why is Africa’s life expectancy so much lower than the other
+  four continents?
 
 ``` r
 gapminder %>%
   group_by(year, continent) %>%
   summarize(pop = sum(pop)) %>%
-  ggplot(aes(year, pop, fill = continent)) +
-  geom_area()
+  ggplot(aes(year, pop, color = continent)) +
+  geom_line()
 ```
 
     ## `summarise()` has regrouped the output.
@@ -473,6 +540,8 @@ gapminder %>%
   according to Wikipedia so it is super small compared to every other
   continent.
 
+- Question: Why is Oceania’s population barely changing at all?
+
 ``` r
 gapminder %>%
   group_by(year) %>%
@@ -491,6 +560,7 @@ countries over the years.
 
 - There is a large spike in 1972 after a decline and then a sharp fall
   off afterward.
+- Question: what caused the large spike in 1972?
 
 ``` r
 gapminder %>%
@@ -551,6 +621,8 @@ of all the countries over the years.
 
 - This is a smaller but still noticeable spike in 1977 which means there
   was a large disparity in ratio again.
+
+- Question: what are the two large spikes in 1977 and 1992?
 
 ``` r
 gapminder %>%
