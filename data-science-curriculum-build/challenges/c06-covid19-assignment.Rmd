@@ -24,7 +24,7 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 <!-- ------------------------- -->
 
 | Category | Needs Improvement | Satisfactory |
-|------------------|-----------------------------|-------------------------|
+|------------------------|------------------------|------------------------|
 | Effort | Some task **q**'s left unattempted | All task **q**'s attempted |
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
@@ -349,7 +349,7 @@ Compute the mean and standard deviation for `cases_per100k` and `deaths_per100k`
 ```{r q6-task}
 ## TASK: Compute mean and sd for cases_per100k and deaths_per100k
 df_normalized %>%
-  
+  filter(date == "2021-01-04") %>%
   summarize(
     mean_cases = mean(cases_per100k, na.rm = TRUE),
     mean_deaths = mean(deaths_per100k, na.rm = TRUE),
@@ -506,6 +506,8 @@ Interesting findings:
 - I looked into what was happening in Nantucket in July of 2020 to see if there was anything of note. According to an NBC article ([source](https://www.nbcboston.com/news/local/nantucket-sees-increase-of-coronavirus-cases-with-arrival-of-summer-crowd/2165713/){.uri}), there was a surge in Covid cases due to the summer months and people migrating to the island for vacation. Nantucket is already a small island with a small population with around 10,000 residents in 2022 (which corresponds to the year with highest amounts of covid cases). The slow increase in cases compared to all other counties was probably due to there not being many people coming onto the island and them being relatively isolated, which abruptly changed when people from the mainland came to the island during the summer months. Due to covid's burst nature of spreading and the small population of Nantucket, it makes sense that it was one of the highest counties by 2022 in terms of cases because there are already fewer people to get sick in the first place and each person can spread it to a ton of others.
 
 - The deaths graph is interesting because Nantucket has a really weird looking graph just because there were so few deaths at all it does not form a smooth line and instead looks really jagged. One potential cause I can think of for this is the fact that Nantucket is the wealthiest county in Massachusetts so it's possible the lower death rates was due to people in Nantucket having better access to healthcare and treatment options.
+
+- The deaths graph is also interesting because the counts are supposed to be cumulative, but clearly the line plotted goes back to zero which should not happen once at least 1 death has occured. During the pandemic, the counts for deaths and cases were sometimes revised, so it's possible that the discrepancies in this data are either due to mismatched reporting of death counts, or attempts to fix death counts without properly ensuring that all the data was fixed.
 
 ### Aside: Some visualization tricks
 
