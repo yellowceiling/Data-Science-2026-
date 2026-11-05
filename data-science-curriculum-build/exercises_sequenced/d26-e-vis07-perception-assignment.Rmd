@@ -18,19 +18,20 @@ library(tidyverse)
 ```
 
 ## Criticize these graphs!
+
 <!-- -------------------------------------------------- -->
 
 Using the ideas from the reading (video), state some issues with the following graphs. As a reminder, the *visual hierarchy* is:
 
-1. Position along a common scale
-2. Position on identical but nonaligned scales
-3. Length
-4. Angle; Slope (With slope not too close to 0, $\pi/2$, or $\pi$.)
-5. Area
-6. Volume; Density; Color saturation
-7. Color hue
+1.  Position along a common scale
+2.  Position on identical but nonaligned scales
+3.  Length
+4.  Angle; Slope (With slope not too close to 0, $\pi/2$, or $\pi$.)
+5.  Area
+6.  Volume; Density; Color saturation
+7.  Color hue
 
-### __q1__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+### **q1** What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
 ```{r q1-vis}
 ## NOTE: No need to edit; run and criticize
@@ -43,8 +44,9 @@ mpg %>%
 **Observations**:
 
 - What are some issues with this graph?
+- Scale in reverse alphabetical order
 
-### __q2__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+### **q2** What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
 ```{r q2-vis}
 ## NOTE: No need to edit; run and criticize
@@ -57,8 +59,9 @@ as_tibble(mtcars) %>%
 ```
 
 - What are some issues with this graph?
+- Color hues would be helpful, very hard to tell the diameters apart.
 
-### __q3__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+### **q3** What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
 ```{r q3-vis}
 ## NOTE: No need to edit; run and criticize
@@ -68,8 +71,9 @@ diamonds %>%
 ```
 
 - What are some issues with this graph?
+- Forced to use the length of the stacked bar charts, instead of comparing them each on a standard axis.
 
-### __q4__ What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
+### **q4** What are some issues with the following graph? *Don't just say* "it's bad"---use concepts from the required reading.
 
 ```{r q4-vis}
 ## NOTE: No need to edit; run and criticize
@@ -81,9 +85,12 @@ diamonds %>%
 ```
 
 - What are some issues with this graph?
+- Pie charts are bad.
 
 <!-- include-exit-ticket -->
+
 # Exit Ticket
+
 <!-- -------------------------------------------------- -->
 
 Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-vis07-perception-assignment.Rmd).

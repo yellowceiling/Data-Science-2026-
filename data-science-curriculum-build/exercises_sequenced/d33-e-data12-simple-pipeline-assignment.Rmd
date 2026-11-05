@@ -63,15 +63,15 @@ Now that you've authorized your account, let's create a very simple data-collect
 
 One convenient feature of Google Sheets is that it nicely integrates with Google Forms: We can create a form (a survey) and link it to a sheet. Let's do that!
 
-### __q1__ Create your own form.
+### **q1** Create your own form.
 
 Go to [Google Forms](https://www.google.com/forms/about/) and create a new form. Add at least one question.
 
-### __q2__ Navigate to the `Responses` tab and click `Create Spreadsheet`. Select `Create a new spreadsheet` and accept the default name.
+### **q2** Navigate to the `Responses` tab and click `Create Spreadsheet`. Select `Create a new spreadsheet` and accept the default name.
 
 ![Create spreadsheet linked to form](./images/e-data12-responses.png)
 
-### __q3__ Copy the URL for your new sheet and copy it below. Run the following chunk to load your (probably empy) sheet.
+### **q3** Copy the URL for your new sheet and copy it below. Run the following chunk to load your (probably empy) sheet.
 
 ```{r qZ-task, eval=FALSE}
 ## TODO:
@@ -86,7 +86,9 @@ Now as results from your survey come in, you can simply re-run this notebook to 
 This is *very simple* but *surprisingly powerful*: I use a pipeline exactly like this for the exit tickets!
 
 <!-- include-exit-ticket -->
+
 # Exit Ticket
+
 <!-- -------------------------------------------------- -->
 
 Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-data12-simple-pipeline-assignment.Rmd).
