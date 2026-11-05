@@ -163,15 +163,16 @@ df_antibiotics %>%
     names_to = "antibiotics",
     values_to = "MIC",
     cols = c("penicillin", "streptomycin", "neomycin")
-  )
-  
+  ) %>%
+  mutate(bacteria = fct_reorder(bacteria, MIC))
 
 pivot_anti %>%
   ggplot(aes(MIC, bacteria)) +
   geom_vline(xintercept = 0.1, linetype = "dashed") +
   geom_point(aes(color = gram)) +
   facet_wrap(~ antibiotics) +
-  scale_x_log10()
+  scale_x_log10() +
+  labs(title = "All Bacteria vs. MIC for all Antibiotics")
 ```
 
 ![](c05-antibiotics-assignment_files/figure-gfm/q1.1-1.png)<!-- -->
@@ -193,8 +194,10 @@ pivot_anti %>%
   ) +
   geom_point() + 
   coord_flip() +
-  facet_wrap(~gram) +
-  scale_y_log10()
+  facet_wrap(~gram, nrow = 2, scales = "free_y") +
+  scale_y_log10() +
+  #labeller = labeller(.rows = label_both) +
+  labs(title = "All Bacteria vs. MIC for all Antibiotics")
 ```
 
 ![](c05-antibiotics-assignment_files/figure-gfm/q1.2-1.png)<!-- -->
@@ -216,8 +219,9 @@ pivot_anti %>%
   ) +
   geom_point() + 
   coord_flip() +
-  facet_wrap(~gram) +
-  scale_y_log10()
+  facet_wrap(~gram, nrow = 2, scales = "free_y") +
+  scale_y_log10() +
+  labs(title = "All Bacteria vs. MIC for Streptomycin")
 ```
 
 ![](c05-antibiotics-assignment_files/figure-gfm/q1.3-1.png)<!-- -->
@@ -240,7 +244,8 @@ pivot_anti %>%
   geom_col() + 
   coord_flip() +
   facet_wrap(~antibiotics) +
-  scale_y_log10()
+  scale_y_log10() +
+  labs(title = "All Bacteria vs. MIC for Neomycin")
 ```
 
 ![](c05-antibiotics-assignment_files/figure-gfm/q1.4-1.png)<!-- -->

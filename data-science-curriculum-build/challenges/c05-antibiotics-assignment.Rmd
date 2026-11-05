@@ -42,7 +42,7 @@ define how you will be graded, both on an individual and team basis.
 <!-- ------------------------- -->
 
 | Category | Needs Improvement | Satisfactory |
-|------------------|-----------------------------|-------------------------|
+|------------------------|------------------------|------------------------|
 | Effort | Some task **q**'s left unattempted | All task **q**'s attempted |
 | Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
 | Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
@@ -124,15 +124,16 @@ df_antibiotics %>%
     names_to = "antibiotics",
     values_to = "MIC",
     cols = c("penicillin", "streptomycin", "neomycin")
-  )
-  
+  ) %>%
+  mutate(bacteria = fct_reorder(bacteria, MIC))
 
 pivot_anti %>%
   ggplot(aes(MIC, bacteria)) +
   geom_vline(xintercept = 0.1, linetype = "dashed") +
   geom_point(aes(color = gram)) +
   facet_wrap(~ antibiotics) +
-  scale_x_log10()
+  scale_x_log10() +
+  labs(title = "All Bacteria vs. MIC for all Antibiotics")
   
 ```
 
@@ -153,8 +154,10 @@ pivot_anti %>%
   ) +
   geom_point() + 
   coord_flip() +
-  facet_wrap(~gram) +
-  scale_y_log10()
+  facet_wrap(~gram, nrow = 2, scales = "free_y") +
+  scale_y_log10() +
+  #labeller = labeller(.rows = label_both) +
+  labs(title = "All Bacteria vs. MIC for all Antibiotics")
 ```
 
 #### Visual 3 (Some variables)
@@ -174,8 +177,9 @@ pivot_anti %>%
   ) +
   geom_point() + 
   coord_flip() +
-  facet_wrap(~gram) +
-  scale_y_log10()
+  facet_wrap(~gram, nrow = 2, scales = "free_y") +
+  scale_y_log10() +
+  labs(title = "All Bacteria vs. MIC for Streptomycin")
 ```
 
 #### Visual 4 (Some variables)
@@ -196,7 +200,8 @@ pivot_anti %>%
   geom_col() + 
   coord_flip() +
   facet_wrap(~antibiotics) +
-  scale_y_log10()
+  scale_y_log10() +
+  labs(title = "All Bacteria vs. MIC for Neomycin")
 ```
 
 #### Visual 5 (Some variables)
